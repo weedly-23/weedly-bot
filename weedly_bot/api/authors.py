@@ -25,7 +25,6 @@ class AuthorClient:
 
     def get_author_feed(self, author_id: int):
         url = self.url / 'api/v1/authors' / author_id / 'feed'
-        print(str(url))
         req = httpx.get(str(url)).json()
 
         logger.debug('получили фид автора')

@@ -27,16 +27,38 @@ class UserClient:
 
     def subscrbe_user_to_rss(self, uid, feed_id):
         """добавить rss в подписки юзера"""
-        data = {"uid":uid, "feed_id":feed_id}
-        url = self.url / 'api/v1/users/' / str(uid)
+        data = {"feed_id": feed_id}
+        url = self.url / 'api/v1/users/' / str(uid) / 'feeds'
+
         try:
-            req = httpx.put(str(url), json=data, follow_redirects=True)
+            req = httpx.put(str(url), json=data)
             req.raise_for_status()
-            logger.debug('добавили юзеру %s в подписки %s', uid, feed_id)
+            logger.debug('обновленные подписки юзера --- ', req.json()['updated_feeds'])
 
         except httpx.HTTPError as er:
             logger.warning(er)
 
 
     def get_user_feeds(self, uid):
-        url = ''
+        '''[
+            {
+                "category": null,
+                "is_rss": true,
+                "name": "vc.ru",
+                "uid": 4,
+                "url": "https://vc.ru/rss?ref=vc.ru"
+            },'''
+
+        url = self.url / 'api/v1/users/' / str(uid) / 'feeds'
+
+        try:
+            req = httpx.get(str(url))
+            req.raise_for_status()
+            # print(req.json())
+            # logger.debug('получили подписки юзера --- %s', str(req.json()))
+            return req.json()
+
+        except httpx.HTTPError as er:
+            logger.warning(er)
+
+

@@ -14,27 +14,27 @@ class FeedClient:
         self.url = url
 
     def get_all_smi_names(self):
-        res = httpx.get(f'{self.url}/api/v1/feeds/?rss-only=0').json()
+        res = httpx.get(f'{str(self.url)}/api/v1/feeds/?rss-only=0').json()
         smi = [e['name'] for e in res]
         logger.debug('получили СМИ')
         logger.debug(res)
         return set(smi)
 
     def get_all_smi(self):
-        res = httpx.get(f'{self.url}/api/v1/feeds/?rss-only=0').json()
+        res = httpx.get(f'{str(self.url)}/api/v1/feeds/?rss-only=0').json()
         logger.debug('получили СМИ')
         logger.debug(res)
         return res
 
     def get_all_articles_of_a_feed(self, feed_id):
-        url = self.url / 'api/v1/feeds' / feed_id / 'articles'
+        url = self.url / 'api/v1/feeds' / str(feed_id) / 'articles'
         res = httpx.get(str(url), follow_redirects=True).json()
         return res
 
     def get_all_authors_of_a_feed(self, media_name: str):
         media = media_name.replace('.', '-')
         res = httpx.get(
-            f'{self.url}/api/v1/feeds/source-name/{media_name}').json()
+            f'{str(self.url)}/api/v1/feeds/source-name/{media_name}').json()
         logger.debug('вот авторы')
         # list of Author { "feed_id": 3, "name": "Рая Хачатрян", "uid": 12}
         logger.debug(res)
@@ -46,7 +46,7 @@ class FeedClient:
         url = self.url / "api/v1/feeds" / "get-by-url/"
 
         try:
-            res = httpx.put(str(url), json=data)
+            res = httpx.post(str(url), json=data)
             res.raise_for_status()
             logger.debug('нашли фид по урлу --- %s', res.json())
             return res.json()

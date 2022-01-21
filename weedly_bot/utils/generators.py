@@ -23,6 +23,7 @@ class KeyboardGenerator:
         logger.debug('получили в generate_articles %s, %s, %s,',
                      list_of_articles, data_for_return, data_for_pagination)
 
+
         for i, e in enumerate(list_of_articles):
             e['num'] = i + 1
 
@@ -34,6 +35,10 @@ class KeyboardGenerator:
 
         kb = InlineKeyboardPaginator(max(numered_keyboard.keys()), current_page=current,
                                      data_pattern=data_for_pagination)
+
+        if type(data_for_pagination) == str:
+            kb = InlineKeyboardPaginator(max(numered_keyboard.keys()), current_page=current,
+                                         data_pattern=data_for_pagination+'#{page}')
 
         text = f'Источник: {feed_name} \n\n'
         for i, e in enumerate(numered_keyboard[current]):

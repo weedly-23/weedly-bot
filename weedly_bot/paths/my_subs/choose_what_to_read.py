@@ -14,6 +14,7 @@ async def choose_source(message: types.Message):
         inline_keyboard=[
 
             [InlineKeyboardButton(text='Выбрать один источник', callback_data='show_user_feeds')],
+            [InlineKeyboardButton(text='Выбрать катеогорию', callback_data='read_category')],
             [InlineKeyboardButton(text='Читать все в одной ленте', callback_data='read_all')],
             [InlineKeyboardButton(text='< Назад', callback_data='back_to_start')],
 
@@ -30,6 +31,7 @@ async def choose_source_callback(call: types.CallbackQuery):
         inline_keyboard=[
 
             [InlineKeyboardButton(text='Выбрать один источник', callback_data='show_user_feeds')],
+            [InlineKeyboardButton(text='Выбрать катеогорию', callback_data='read_category')],
             [InlineKeyboardButton(text='Читать все в одной ленте', callback_data='read_all')],
             [InlineKeyboardButton(text='< Назад', callback_data='back_to_start')]
 
@@ -45,7 +47,7 @@ async def what_to_read(call: types.CallbackQuery):
     if '#' in call.data:
         current = int(call.data.split('#')[1])
 
-    all_sources = api_client.feeds.get_all_smi()
+    all_sources = api_client.users.get_user_feeds(uid=call.from_user.id)
     kb_generator = generators.KeyboardGenerator()
     kb = kb_generator.generate_feeds(feeds=all_sources, current=current, feeds_calldata=feeds_calldata,
                                      data_for_return='back_to_choosing_source',

@@ -27,13 +27,5 @@ async def read_one_feed(call:types.CallbackQuery, callback_data: dict):
                                      feed_name=feed_name,
                                      data_for_pagination=callback_data,
                                      current=int(page))
-    print(text, kb)
     await call.message.edit_text(text=text, reply_markup=kb, disable_web_page_preview=True)
 
-
-'''    {'author_id': 1, 'description': None, 'feed_id': 1, 'published': 'Sun, 16 Jan 2022 19:45:00 GMT',
-     'title': 'Поправки на QRспективу // Какие изменения уже предложены в законопроект о «сертификатах здоровья»', 'uid': 12,
-     'url': 'https://www.kommersant.ru/doc/5171005'}
-'''
-
-#    await call.message.answer('читаем один')

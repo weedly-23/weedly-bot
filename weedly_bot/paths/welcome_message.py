@@ -1,13 +1,13 @@
 import logging
-from loguru import logger
+# from loguru import logger
 from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 from weedly_bot.loader import dp
 from weedly_bot.loader import api_client
 
+import logging
 logger = logging.getLogger(__name__)
-
 
 main_menu = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='📝 Добавить источники'),
                                            KeyboardButton(text='📖 Читать подписки')],
@@ -33,6 +33,7 @@ async def start(message: types.Message):
     api_client.users.add_user(uid=user_id, name=user_name)
 
     logger.debug('юзер %s нажал на старт', message.from_user.id)
+
 
     await message.answer(text=welcome_text, reply_markup=main_menu, parse_mode='Markdown')
 
