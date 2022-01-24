@@ -10,6 +10,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 TODO.txt
+test.py
 
 # C extensions
 *.so

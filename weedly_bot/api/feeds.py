@@ -55,6 +55,7 @@ class FeedClient:
             logger.warning(ex)
 
     def add_rss_source(self, url):
+        logger.debug('добавляем в бд --- %s', url)
         name = get_name_from_url(url)
         data = {"url": url, "is_rss": True, "name": name}
 
