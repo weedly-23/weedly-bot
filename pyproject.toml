@@ -10,6 +10,7 @@ aiogram = "^2.16"
 python-telegram-bot-pagination = "^0.0.2"
 httpx = "^0.21.3"
 python-dotenv = "^0.19.2"
+yarl = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 

@@ -8,7 +8,7 @@
             "name": "start bot",
             "type": "python",
             "request": "launch",
-            "module": "weedly_bot.bot",
+            "module": "weedly_bot",
             "console": "integratedTerminal"
         },
         {
