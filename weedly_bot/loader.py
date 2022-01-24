@@ -14,8 +14,8 @@ from weedly_bot.api.client import ApiClient
 load_dotenv('../.env')
 API_TOKEN = os.getenv('API_TOKEN')
 API_URL = os.getenv('API_URL')
-print('API_TOKEN----', API_TOKEN)
-print('API_URL----', API_URL)
+print('API_TOKEN  ----', API_TOKEN)
+print('API_URL  ----', API_URL)
 
 api_client = ApiClient(URL(API_URL))
 
