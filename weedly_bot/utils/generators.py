@@ -23,7 +23,6 @@ class KeyboardGenerator:
         logger.debug('получили в generate_articles %s, %s, %s,',
                      list_of_articles, data_for_return, data_for_pagination)
 
-
         for i, e in enumerate(list_of_articles):
             e['num'] = i + 1
 
@@ -49,16 +48,17 @@ class KeyboardGenerator:
 
         return text, kb.markup
 
-    def generate_feeds(self, feeds, data_for_return, feeds_calldata, data_for_pagination, current=1):
+    def generate_feeds(self, feeds, data_for_return, action_for_calldata,
+                       feeds_calldata, data_for_pagination, current=1):
         """ Все фиды, на которые подписан автор в виде инлайн клавы с пагинацией"""
 
-        logger.debug(
+        logging.debug(
             f'вошли в generate_feeds---- {feeds}, {data_for_return}, {data_for_pagination}')
 
         feeds_buttons = []
 
         for feed in feeds:
-            feed_calldata = feeds_calldata.new(action='rea',
+            feed_calldata = feeds_calldata.new(action=action_for_calldata,
                                                feed_name=feed['name'], feed_id=feed['uid'], page=1)
             button = InlineKeyboardButton(
                 text=feed['name'], callback_data=feed_calldata)
@@ -80,4 +80,6 @@ class KeyboardGenerator:
         feeds_keyboard.add_after(InlineKeyboardButton(
             text='Назад', callback_data=data_for_return))
 
+        logging.debug('клава на выходе генератора --- %s',
+                      feeds_keyboard.markup)
         return feeds_keyboard.markup

@@ -28,13 +28,13 @@ async def read_all_feeds(call: types.CallbackQuery):
         articles = api_client.feeds.get_all_articles_of_a_feed(f_id)
         all_feeds_articles.append(articles)
 
-    all_feeds_articles = sum(all_feeds_articles,[])
+    all_feeds_articles = sum(all_feeds_articles, [])
     generator = generators.KeyboardGenerator()
     text, kb = generator.generate_articles(list_of_articles=all_feeds_articles,
-                                     data_for_return='show_user_feeds',
-                                     feed_name='тут вставить инфу',
-                                     data_for_pagination='read_all',
-                                     current=int(current))
+                                           data_for_return='show_user_feeds',
+                                           feed_name='тут вставить инфу',
+                                           data_for_pagination='read_all',
+                                           current=int(current))
 
     await call.message.edit_text(text=text, reply_markup=kb, disable_web_page_preview=True)
 
