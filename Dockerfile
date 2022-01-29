@@ -13,6 +13,7 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry install --no-dev
 RUN pip install feedparser
 RUN pip install validators
+RUN pip install bs4
 
 COPY weedly_bot /app/weedly_bot
 
