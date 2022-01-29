@@ -28,9 +28,3 @@ async def what_to_add(message: types.Message):
 async def what_to_add_callback(call: types.CallbackQuery):
 
     await call.message.answer('Что добавляем?', reply_markup=add_rss_kb)
-
-
-@dp.callback_query_handler(text_contains='add_youtube')
-async def add_yt(call: types.CallbackQuery):
-    await call.message.answer('add youtube')
-    await call.answer(cache_time=0)

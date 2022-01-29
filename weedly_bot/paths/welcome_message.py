@@ -34,7 +34,6 @@ async def start(message: types.Message):
 
     logger.debug('юзер %s нажал на старт', message.from_user.id)
 
-
     await message.answer(text=welcome_text, reply_markup=main_menu, parse_mode='Markdown')
 
 
@@ -42,3 +41,8 @@ async def start(message: types.Message):
 async def start_2(call: types.CallbackQuery):
 
     await call.message.answer(text=welcome_text, reply_markup=main_menu, parse_mode='Markdown')
+
+
+@dp.message_handler(text_contains='О боте')
+async def start(message: types.Message):
+    await message.answer(text=welcome_text, reply_markup=main_menu, parse_mode='Markdown')

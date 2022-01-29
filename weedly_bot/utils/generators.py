@@ -41,7 +41,7 @@ class KeyboardGenerator:
 
         text = f'Источник: {feed_name} \n\n'
         for i, e in enumerate(numered_keyboard[current]):
-            text += f'{e["num"]}. *{e["title"]}* \n {e["url"]}\n\n '
+            text += f'{e["num"]}. <b>{e["title"]}</b> \n {e["url"]}\n\n '
 
         kb.add_after(InlineKeyboardButton(
             text='Назад', callback_data=data_for_return))
@@ -58,14 +58,15 @@ class KeyboardGenerator:
         feeds_buttons = []
 
         for feed in feeds:
+            print('feed---', feed)
             feed_calldata = feeds_calldata.new(action=action_for_calldata,
-                                               feed_name=feed['name'], feed_id=feed['uid'], page=1)
+                                               feed_name=feed['name'].replace('&', ''), feed_id=feed['uid'], page=1)
             button = InlineKeyboardButton(
                 text=feed['name'], callback_data=feed_calldata)
             feeds_buttons.append(button)
 
-        feeds_buttons = self.chunks(feeds_buttons, 2)
-
+        feeds_buttons = self.chunks(feeds_buttons, 4)
+        print('feeds_buttons---', feeds_buttons)
         # пронумерованная клава
         numered_keyboard = {}
         for i, e in enumerate(feeds_buttons):
@@ -74,11 +75,14 @@ class KeyboardGenerator:
         feeds_keyboard = InlineKeyboardPaginator(max(numered_keyboard.keys(
         )), current_page=current, data_pattern=data_for_pagination+'#{page}')
 
+        print('feeds_keyboard---', feeds_keyboard)
         for but in numered_keyboard[current]:
             feeds_keyboard.add_before(but)
 
         feeds_keyboard.add_after(InlineKeyboardButton(
             text='Назад', callback_data=data_for_return))
+
+        print('feeds_keyboard с кнопкой возврата---', feeds_keyboard)
 
         logging.debug('клава на выходе генератора --- %s',
                       feeds_keyboard.markup)

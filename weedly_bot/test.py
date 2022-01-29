@@ -1,11 +1,10 @@
-import httpx
+import feedparser
+from weedly_bot.utils.youtube import YoutubService
+yt = YoutubService()
 
+url = 'https://www.youtube.com/c/moscowdjangoru'
+yt_id = yt.extract_channel_id(url)
+rss_link = f'https://www.youtube.com/feeds/videos.xml?channel_id={yt_id}'
 
-import httpx
-
-url = 'http://127.0.0.1:5000/api/v1/users/106441967/feeds'
-print(httpx.get(url))
-
-
-url = 'http://127.0.0.1:5000/api/v1/users/106441967/feeds/8'
-print(httpx.post(url))
+feed = feedparser.parse(rss_link)
+print(feed)

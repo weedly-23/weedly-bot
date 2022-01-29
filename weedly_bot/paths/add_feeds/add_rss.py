@@ -29,6 +29,7 @@ async def typing_rss(message: types.Message, state: FSMContext):
        добавляем feed в подписки юзера. выходим из состояния ловли ссылки """
 
     await message.answer('Проверяем ссылку')
+
     rss_link = message.text
     check_rss = utils.check_if_valid_rss_url(rss_link)
     user_id = message.from_user.id

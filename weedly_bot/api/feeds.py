@@ -47,6 +47,8 @@ class FeedClient:
 
         try:
             res = httpx.post(str(url), json=data)
+            logging.debug('послали post запрос на %s', str(url))
+
             res.raise_for_status()
             logger.debug('нашли фид по урлу --- %s', res.json())
             return res.json()
@@ -54,15 +56,17 @@ class FeedClient:
         except httpx.HTTPError as ex:
             logger.warning(ex)
 
-    def add_rss_source(self, url):
+    def add_rss_source(self, url, name=''):
         logger.debug('добавляем в бд --- %s', url)
-        name = get_name_from_url(url)
+        if not name:
+            name = get_name_from_url(url)
         data = {"url": url, "is_rss": True, "name": name}
 
         try:
             url = self.url / 'api/v1/feeds/'
-            req = httpx.post(str(url), json=data).json()
-            logger.debug(req)
-
+            req = httpx.post(str(url), json=data)  # .json()
+            logging.debug('результат добавления фида %s', req)
+            print(f'--- {req} ---')
+            return req
         except httpx.HTTPError as ex:
             logger.warning(ex)

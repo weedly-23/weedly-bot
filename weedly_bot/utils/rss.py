@@ -6,14 +6,13 @@ import validators
 
 def get_name_from_url(url):
     '''взяли из ура только название ресусра, чтобы написать юзеру, что на него подписались'''
-
-    if 'www' in url:
-        name =  re.findall(pattern='\.[a-z-]*\.', string= url)
-
-        return name[0].strip('.')
-    name = re.findall(pattern='[a-z]*\.', string= url)
-    return name[0].strip('.')
-
+    name = re.findall(pattern='https://.*/', string=url)
+    name = re.sub('https://', '', name[0])
+    name = re.sub('www.', '', name)
+    name = re.findall(pattern='.*/', string=name)
+    name = name[0].strip('/')
+    name = name.split('/')[0]
+    return name
 
 
 def check_if_rss_is_working(url):
@@ -41,13 +40,10 @@ def check_if_valid_rss_url(url):
 
     elif not check_if_rss_is_working(url):
         return {'res': False,
-                'msg':'Не удается подключиться к этому rss фиду. Проверьте правильность написания или попробуйте позже'}
+                'msg': 'Не удается подключиться к этому rss фиду. Проверьте правильность написания или попробуйте позже'}
     else:
 
         source_name = get_name_from_url(url)
-        return  {'res': True,
-                 'msg': f'Работает! Добавили {source_name} в подписки!. '
-                        f'Через пару минут статьи появятся в разделе "Читать подписки"'}
-
-
-
+        return {'res': True,
+                'msg': f'Работает! Добавили {source_name} в подписки!. '
+                f'Через пару минут статьи появятся в разделе "Читать подписки"'}
